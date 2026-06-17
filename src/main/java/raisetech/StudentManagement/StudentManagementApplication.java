@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,4 +39,19 @@ public class StudentManagementApplication {
     student.put("name", name);
     student.put("age", age);
   }
+
+  @PutMapping("/studentInfo")
+  public void updateStudentInfo(
+      @RequestParam String name,
+      @RequestParam String age) {
+
+    student.put("name", name);
+    student.put("age", age);
+  }
+
+  @DeleteMapping("/studentInfo")
+  public void deleteStudentInfo() {
+    student.clear();
+  }
+
 }
