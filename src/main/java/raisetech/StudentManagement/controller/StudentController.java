@@ -7,10 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
+import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.service.StudentService;
 
@@ -29,27 +30,22 @@ public class StudentController {
   @GetMapping("/studentList")
   public String getStudentList(Model model) {
     List<Student> students = service.searchStudentList();
-    List<StudentCourse> studentCourses = service.searchStudentCourseList();
+    List<StudentsCourses> studentCourses = service.searchStudentCourseList();
 
     model.addAttribute("studentList", converter.convertStudentDetails(students, studentCourses));
     return "studentList";
   }
 
   @GetMapping("/studentCourseList")
-  public List<StudentCourse> getStudentCourseList() {
+  public List<StudentsCourses> getStudentCourseList() {
     return service.searchStudentCourseList();
   }
 
   @GetMapping("/newStudent")
   public String newStudent(Model model) {
     StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudent(new Student());
-
-    StudentCourse studentCourse = new StudentCourse();
-    studentDetail.setStudentCourse(List.of(studentCourse));
-
+    studentDetail.setStudentsCourses(List.of(new StudentsCourses()));
     model.addAttribute("studentDetail", studentDetail);
-
     return "registerStudent";
   }
 
@@ -59,9 +55,28 @@ public class StudentController {
     if (result.hasErrors()) {
       return "registerStudent";
     }
-
     service.registerStudent(studentDetail);
+    return "redirect:/studentList";
+  }
 
+  @GetMapping("/student/{id}")
+  public String getStudent(@PathVariable int id, Model model) {
+
+    StudentDetail studentDetail = service.searchStudent(id);
+
+    model.addAttribute("studentDetail", studentDetail);
+
+    return "updateStudent";
+  }
+
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail,
+      BindingResult result) {
+
+    if (result.hasErrors()) {
+      return "updateStudent";
+    }
+    service.updateStudent(studentDetail);
     return "redirect:/studentList";
   }
 }

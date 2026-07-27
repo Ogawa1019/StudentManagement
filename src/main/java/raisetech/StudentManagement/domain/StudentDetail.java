@@ -4,12 +4,12 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourse;
+import raisetech.StudentManagement.data.StudentsCourses;
 
 @Getter
 @Setter
 public class StudentDetail {
 
   private Student student;
-  private List<StudentCourse> studentCourse;
+  private List<StudentsCourses> studentsCourses;
 }
