@@ -1,14 +1,14 @@
 package raisetech.StudentManagement.data;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class StudentCourse {
+public class StudentsCourses {
 
   private int id;
   private int studentId;
   private String courseName;
-  private LocalDate startDate;
-  private LocalDate endDate;
+  private LocalDateTime startDate;
+  private LocalDateTime endDate;
 
   public int getId() {
     return id;
@@ -34,19 +34,19 @@ public class StudentCourse {
     this.courseName = courseName;
   }
 
-  public LocalDate getStartDate() {
+  public LocalDateTime getStartDate() {
     return startDate;
   }
 
-  public void setStartDate(LocalDate startDate) {
+  public void setStartDate(LocalDateTime startDate) {
     this.startDate = startDate;
   }
 
-  public LocalDate getEndDate() {
+  public LocalDateTime getEndDate() {
     return endDate;
   }
 
-  public void setEndDate(LocalDate endDate) {
+  public void setEndDate(LocalDateTime endDate) {
     this.endDate = endDate;
   }
 }
