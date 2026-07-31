@@ -36,7 +36,6 @@ public class StudentService {
 
     Student student = repository.searchStudent(id);
     List<StudentsCourses> studentCourses = repository.searchStudentCourseByStudentId(id);
-
     return converter.convertStudentDetail(student, studentCourses);
   }
 
@@ -55,7 +54,6 @@ public class StudentService {
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-
     for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
       repository.updateStudentsCourses(studentsCourses);
     }

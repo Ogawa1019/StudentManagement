@@ -12,24 +12,16 @@ import raisetech.StudentManagement.data.StudentsCourses;
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students")
+  @Select("SELECT * FROM students WHERE is_deleted = false")
   List<Student> search();
 
-  @Select("""
-      SELECT *
-      FROM students
-      WHERE id = #{id}
-      """)
+  @Select(" SELECT * FROM students WHERE id = #{id}")
   Student searchStudent(int id);
 
   @Select("SELECT * FROM students_courses")
   List<StudentsCourses> searchStudentCourse();
 
-  @Select("""
-      SELECT *
-      FROM students_courses
-      WHERE student_id = #{id}
-      """)
+  @Select(" SELECT * FROM students_courses WHERE student_id = #{id}")
   List<StudentsCourses> searchStudentCourseByStudentId(int id);
 
   @Insert("""
