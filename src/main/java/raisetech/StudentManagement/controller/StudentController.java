@@ -61,18 +61,14 @@ public class StudentController {
 
   @GetMapping("/student/{id}")
   public String getStudent(@PathVariable int id, Model model) {
-
     StudentDetail studentDetail = service.searchStudent(id);
-
     model.addAttribute("studentDetail", studentDetail);
-
     return "updateStudent";
   }
 
   @PostMapping("/updateStudent")
   public String updateStudent(@ModelAttribute StudentDetail studentDetail,
       BindingResult result) {
-
     if (result.hasErrors()) {
       return "updateStudent";
     }
