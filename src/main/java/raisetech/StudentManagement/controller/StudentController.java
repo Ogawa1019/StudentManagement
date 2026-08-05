@@ -60,7 +60,7 @@ public class StudentController {
   }
 
   @GetMapping("/student/{id}")
-  public String getStudent(@PathVariable int id, Model model) {
+  public String getStudent(@PathVariable String id, Model model) {
     StudentDetail studentDetail = service.searchStudent(id);
     model.addAttribute("studentDetail", studentDetail);
     return "updateStudent";
