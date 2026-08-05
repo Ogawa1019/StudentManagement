@@ -32,7 +32,7 @@ public class StudentService {
     return repository.searchStudentCourse();
   }
 
-  public StudentDetail searchStudent(int id) {
+  public StudentDetail searchStudent(String id) {
 
     Student student = repository.searchStudent(id);
     List<StudentsCourses> studentCourses = repository.searchStudentCourseByStudentId(id);
