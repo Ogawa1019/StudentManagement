@@ -11,45 +11,56 @@ import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
+/**
+ * 受講生情報を取り扱うサービスです。
+ * 受講生の検索や登録・更新処理を行います。
+ */
 @Service
 public class StudentService {
 
-  private final StudentRepository repository;
-  private final StudentConverter converter;
+  private StudentRepository repository;
+  private StudentConverter converter;
 
   @Autowired
-  public StudentService(StudentRepository repository,
-      StudentConverter converter) {
+  public StudentService(StudentRepository repository, StudentConverter converter) {
     this.repository = repository;
     this.converter = converter;
   }
 
-  public List<Student> searchStudentList() {
-    return repository.search();
+  /**
+   * 受講生の一覧検索です。 全件検索を行うので、条件指定は行いません。
+   *
+   * @return　受講生一覧（全件）
+   */
+  public List<StudentDetail> searchStudentList() {
+    List<Student> studentList = repository.search();
+    List<StudentsCourses> studentsCoursesList = repository.searchStudentsCoursesList();
+    return converter.convertStudentDetails(studentList, studentsCoursesList);
   }
 
-  public List<StudentsCourses> searchStudentCourseList() {
-    return repository.searchStudentCourse();
-  }
-
+  /**
+   * 受講生検索です。 IDに紐付く受講生情報を取得したあと、その受講生に紐付く受講生コース情報を取得して設定します。
+   *
+   * @param id 受講生ID
+   * @return　受講生
+   */
   public StudentDetail searchStudent(String id) {
-
     Student student = repository.searchStudent(id);
-    List<StudentsCourses> studentCourses = repository.searchStudentCourseByStudentId(id);
-    return converter.convertStudentDetail(student, studentCourses);
+    List<StudentsCourses> studentsCourses = repository.searchStudentsCoursesId(student.getId());
+    return new StudentDetail(student,studentsCourses);
   }
 
   @Transactional
-  public void registerStudent(StudentDetail studentDetail) {
+  public StudentDetail registerStudent(StudentDetail studentDetail) {
     repository.registerStudent(studentDetail.getStudent());
-    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()) {
-      studentsCourses.setStudentId(studentDetail.getStudent().getId());
-      studentsCourses.setStartDate(LocalDateTime.now());
-      studentsCourses.setEndDate(LocalDateTime.now().plusYears(1));
-
-      repository.registerStudentsCourses(studentsCourses);
-    }
+    for (StudentsCourses studentsCourse: studentDetail.getStudentsCourses()) {
+    studentsCourse.setStudentId(studentDetail.getStudent().getId());
+    studentsCourse.setStartDate(LocalDateTime.now());
+    studentsCourse.setEndDate(LocalDateTime.now().plusYears(1));
+    repository.registerStudentsCourses(studentsCourse);
   }
+  return studentDetail;
+}
 
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
