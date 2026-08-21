@@ -34,8 +34,8 @@ public class StudentService {
    */
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.search();
-    List<StudentCourse> studentCoursesList = repository.searchStudentsCoursesList();
-    return converter.convertStudentDetails(studentList, studentCoursesList);
+    List<StudentCourse> studentCourseList = repository.searchStudentCourseList();
+    return converter.convertStudentDetails(studentList, studentCourseList);
   }
 
   /**
@@ -46,8 +46,8 @@ public class StudentService {
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse> studentCours = repository.searchStudentsCoursesId(student.getId());
-    return new StudentDetail(student, studentCours);
+    List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+    return new StudentDetail(student, studentCourse);
   }
 
   /**
@@ -64,7 +64,7 @@ public class StudentService {
     repository.registerStudent(student);
     studentDetail.getStudentCourseList().forEach(studentCourse -> {
       initStudentsCourse(studentCourse, student);
-      repository.registerStudentsCourses(studentCourse);
+      repository.registerStudentCourse(studentCourse);
     });
   return studentDetail;
 }
@@ -83,11 +83,16 @@ public class StudentService {
     studentCourse.setEndDate(now.plusYears(1));
   }
 
+  /**
+   * 受講生詳細の更新を行います。
+   * 受講生と受講生コース情報をそれぞれ更新します。
+   *
+   * @param studentDetail　受講生詳細
+   */
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentCourse studentCourses : studentDetail.getStudentCourseList()) {
-      repository.updateStudentsCourses(studentCourses);
-    }
+    studentDetail.getStudentCourseList()
+        .forEach(studentCourse -> repository.updateStudentCourse(studentCourse));
   }
 }
