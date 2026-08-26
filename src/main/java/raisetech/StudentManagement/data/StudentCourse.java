@@ -2,7 +2,7 @@ package raisetech.StudentManagement.data;
 
 import java.time.LocalDateTime;
 
-public class StudentsCourses {
+public class StudentCourse {
 
   private int id;
   private int studentId;
