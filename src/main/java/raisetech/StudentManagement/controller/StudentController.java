@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 
 /**
@@ -40,6 +41,10 @@ public class StudentController {
     return service.searchStudentList();
   }
 
+  @GetMapping("/testException")
+  public void testException() throws TestException {
+    throw new TestException("例外処理のテストです。");
+  }
   /**
    * 受講生詳細の検索です。
    * IDに紐付く任意の受講生のじ情報を取得します。
