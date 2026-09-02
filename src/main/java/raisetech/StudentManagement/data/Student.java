@@ -1,11 +1,13 @@
 package raisetech.StudentManagement.data;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * 受講生を扱うオブジェクト。
  */
+@Schema(description = "受講生詳細")
 @Getter
 @Setter
 public class Student {
