@@ -1,2 +1,2 @@
 # StudentManagement
-JavaCourse-07
+JavaCourse
