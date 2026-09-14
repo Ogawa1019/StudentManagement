@@ -2,6 +2,7 @@ package raisetech.StudentManagement.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -103,5 +104,16 @@ class StudentServiceTest {
     assertNotNull(studentCourse.getStartDate());
     assertNotNull(studentCourse.getEndDate());
     assertEquals(studentCourse.getStartDate().plusYears(1),studentCourse.getEndDate());
+  }
+
+  @Test
+  void 受講生詳細検索_受講生が存在しない場合に例外が発生すること() {
+    String id = "999";
+
+    when(repository.searchStudent(id)).thenReturn(null);
+
+    assertThrows(NullPointerException.class, () -> sut.searchStudent(id));
+
+    verify(repository, times(1)).searchStudent(id);
   }
 }
