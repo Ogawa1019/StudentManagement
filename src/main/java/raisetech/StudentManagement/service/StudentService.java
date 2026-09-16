@@ -46,7 +46,7 @@ public class StudentService {
    */
   public StudentDetail searchStudent(String id) {
     Student student = repository.searchStudent(id);
-    List<StudentCourse> studentCourse = repository.searchStudentCourse(student.getId());
+    List<StudentCourse> studentCourse = repository.searchStudentCourse(Integer.parseInt(student.getId()));
     return new StudentDetail(student, studentCourse);
   }
 
@@ -78,7 +78,7 @@ public class StudentService {
   private void initStudentsCourse(StudentCourse studentCourse, Student student) {
     LocalDateTime now = LocalDateTime.now();
 
-    studentCourse.setStudentId(student.getId());
+    studentCourse.setStudentId(Integer.parseInt(student.getId()));
     studentCourse.setStartDate(now);
     studentCourse.setEndDate(now.plusYears(1));
   }

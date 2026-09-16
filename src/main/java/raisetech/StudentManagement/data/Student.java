@@ -1,6 +1,8 @@
 package raisetech.StudentManagement.data;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,14 +14,31 @@ import lombok.Setter;
 @Setter
 public class Student {
 
-  private int id;
+  @NotBlank
+  @Pattern(regexp = "^\\d+$",message = "数字のみ入力するようにしてください。")
+  private String id;
+
+  @NotBlank
   private String fullname;
+
+  @NotBlank
   private String furigana;
+
+  @NotBlank
   private String nickname;
+
+  @NotBlank
   private String email;
+
+  @NotBlank
   private String city;
+
   private int age;
+
+  @NotBlank
   private String gender;
+
   private String remark;
+
   private boolean isDeleted;
 }

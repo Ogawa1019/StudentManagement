@@ -48,6 +48,7 @@ public class StudentController {
   public void testException() throws TestException {
     throw new TestException("例外処理のテストです。");
   }
+
   /**
    * 受講生詳細の検索です。
    * IDに紐付く任意の受講生のじ情報を取得します。
