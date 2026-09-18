@@ -54,21 +54,21 @@ class StudentServiceTest {
   void 受講生詳細検索_リポジトリの処理が適切に呼び出せていること() {
     String id = "1";
     Student student = new Student();
-    student.setId(1);
+    student.setId("1");
     List<StudentCourse> studentCourseList = new ArrayList<>();
     when(repository.searchStudent(id)).thenReturn(student);
-    when(repository.searchStudentCourse(student.getId())).thenReturn(studentCourseList);
+    when(repository.searchStudentCourse(Integer.parseInt(student.getId()))).thenReturn(studentCourseList);
 
     sut.searchStudent(id);
 
     verify(repository,times(1)).searchStudent(id);
-    verify(repository,times(1)).searchStudentCourse(student.getId());
+    verify(repository,times(1)).searchStudentCourse(Integer.parseInt(student.getId()));
   }
 
   @Test
   void 受講生詳細登録_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student();
-    student.setId(1);
+    student.setId("1");
     StudentCourse studentCourse = new StudentCourse();
     StudentDetail studentDetail = new StudentDetail(student,List.of(studentCourse));
 
@@ -81,7 +81,7 @@ class StudentServiceTest {
   @Test
   void 受講生詳細更新_リポジトリの処理が適切に呼び出せていること() {
     Student student = new Student();
-    student.setId(1);
+    student.setId("1");
     StudentCourse studentCourse = new StudentCourse();
     StudentDetail studentDetail = new StudentDetail(student,List.of(studentCourse));
 
@@ -94,7 +94,7 @@ class StudentServiceTest {
   @Test
   void 受講生コース情報の初期化_受講生IDと開始日と終了日が設定されていること() {
     Student student = new Student();
-    student.setId(1);
+    student.setId("1");
     StudentCourse studentCourse = new StudentCourse();
     StudentDetail studentDetail = new StudentDetail(student,List.of(studentCourse));
 
